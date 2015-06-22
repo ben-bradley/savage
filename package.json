@@ -1,0 +1,26 @@
+{
+  "name": "savage",
+  "version": "0.0.1",
+  "description": "A basic template for deving an ES6 app",
+  "main": "index.js",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "q": "^1.4.1",
+    "request": "^2.58.0"
+  },
+  "devDependencies": {
+    "boom": "^2.8.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-nodemon": "^2.0.3",
+    "gulp-run": "^1.6.8",
+    "hapi": "^8.6.1",
+    "mocha": "^2.2.5",
+    "should": "^6.0.3"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test mocha -R spec test/spec.js"
+  },
+  "author": "Ben Bradley",
+  "license": "MIT"
+}
