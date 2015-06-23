@@ -60,7 +60,9 @@ class Endpoint {
       throw new Error('You must specify a path property');
 
     this.url = cn.url + path;
-    this.middleware = cn.middleware.concat(middleware);
+    this._clientMiddleware = cn.middleware;
+    this._endpointMiddleware = middleware;
+    this.middleware = [];
 
     debug('Endpoint: ', this);
   }
@@ -183,7 +185,8 @@ class Endpoint {
    * @returns {Promise} Returns the _request promise
    */
   _processMiddleware(options) {
-    let middleware = this.middleware;
+    let middleware = [].concat(this.middleware, this._clientMiddleware, this._endpointMiddleware);
+    this.middleware = [];
     debug('processing middleware: ', middleware);
 
     if (!options.headers)

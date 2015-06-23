@@ -73,7 +73,9 @@ var Endpoint = (function () {
     if (!path) throw new Error('You must specify a path property');
 
     this.url = cn.url + path;
-    this.middleware = cn.middleware.concat(middleware);
+    this._clientMiddleware = cn.middleware;
+    this._endpointMiddleware = middleware;
+    this.middleware = [];
 
     debug('Endpoint: ', this);
   }
@@ -199,7 +201,8 @@ var Endpoint = (function () {
      * @returns {Promise} Returns the _request promise
      */
     value: function _processMiddleware(options) {
-      var middleware = this.middleware;
+      var middleware = [].concat(this.middleware, this._clientMiddleware, this._endpointMiddleware);
+      this.middleware = [];
       debug('processing middleware: ', middleware);
 
       if (!options.headers) options.headers = {};
