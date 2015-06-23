@@ -129,6 +129,8 @@ var Endpoint = (function () {
     value: function read(path) {
       if (!path) path = '';
 
+      if (!/^\//.test(path)) path = '/' + path;
+
       var options = {
         url: this.url + path,
         method: 'get'
@@ -152,6 +154,8 @@ var Endpoint = (function () {
     value: function update(path, data) {
       if (!path) throw new Error('An update() call requires a path argument');else if (!data) throw new Error('An update() call requires a data argument');
 
+      if (!/^\//.test(path)) path = '/' + path;
+
       var options = {
         url: this.url + path,
         method: 'put',
@@ -174,6 +178,8 @@ var Endpoint = (function () {
      */
     value: function _delete(path) {
       if (!path) throw new Error('A delete() call requires a path argument');
+
+      if (!/^\//.test(path)) path = '/' + path;
 
       var options = {
         url: this.url + path,

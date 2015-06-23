@@ -19,19 +19,6 @@ function mw(options, resolve, reject) {
   resolve(options);
 }
 
-function delayedMw(options, resolve, reject) {
-  setTimeout(function() {
-    options.headers.delayed = true;
-    resolve(options);
-  }, 1000);
-}
-
-function failedMw(options, resolve, reject) {
-  process.nexttick(function() {
-    reject(new Error('Middleware failure!'));
-  })
-}
-
 debug('starting tests...');
 
 describe('Client', function () {
@@ -93,75 +80,12 @@ describe('Client', function () {
 
   })
 
-  describe('read()', function () {
+  require('./create')();
 
-    var client;
+  require('./read')();
 
-    beforeEach(function (done) {
-      client = new Client(clientOptions);
-      server.start(done);
-    });
+  require('./update')();
 
-    afterEach(function (done) {
-      server.stop(done);
-    });
-
-    it('should return basic response to /users', function (done) {
-      var user = new client.Endpoint(endpointOptions);
-      user
-        .use(mw)
-        .use(delayedMw)
-        .use(mw)
-        .read()
-        .then(function (response) {
-          asserts.response(response);
-          (response.json).should.be.an.Array;
-          asserts.user(response.json[0]);
-          done();
-        })
-        .catch(done);
-    })
-
-    it('should return basic response to /users/acb123', function (done) {
-      var user = new client.Endpoint(endpointOptions);
-      user
-        .read('/abc123')
-        .then(function (response) {
-          asserts.response(response);
-          asserts.user(response.json);
-          done();
-        })
-        .catch(done);
-    })
-
-    it('should handle non-200 responses', function (done) {
-      var user = new client.Endpoint(endpointOptions);
-      user
-        .read('/404')
-        .then(function (response) {
-          asserts.response(response);
-          (response.statusCode).should.eql(404);
-          done();
-        })
-        .catch(function (err) {
-          (err).should.be.an.Error;
-          done();
-        });
-    })
-
-    it('should allow creating a new model', function (done) {
-      var user = new client.Endpoint(endpointOptions);
-      user
-        .create({
-          username: 'newguy'
-        })
-        .then(function (response) {
-          asserts.response(response);
-          done();
-        })
-        .catch(done);
-    })
-
-  })
+  require('./delete')();
 
 })

@@ -112,6 +112,9 @@ class Endpoint {
     if (!path)
       path = '';
 
+    if (!/^\//.test(path))
+      path = '/' + path;
+
     let options = {
       url: this.url + path,
       method: 'get'
@@ -136,6 +139,9 @@ class Endpoint {
     else if (!data)
       throw new Error('An update() call requires a data argument');
 
+    if (!/^\//.test(path))
+      path = '/' + path;
+
     let options = {
       url: this.url + path,
       method: 'put',
@@ -157,6 +163,9 @@ class Endpoint {
   delete(path) {
     if (!path)
       throw new Error('A delete() call requires a path argument');
+
+    if (!/^\//.test(path))
+      path = '/' + path;
 
     let options = {
       url: this.url + path,

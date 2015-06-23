@@ -16,3 +16,7 @@ module.exports.user = function(user) {
     'username'
   ]);
 }
+
+module.exports.middleware = function(response) {
+  (response.request.headers.foo).should.eql('bar');
+}

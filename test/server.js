@@ -7,34 +7,65 @@ server.connection({
   port: 3001
 })
 
-server.route({
-  method: 'get',
-  path: '/users',
-  handler: function(request, reply) {
-    reply([{
-      id: 'abc123',
-      username: 'joeuser'
-    }])
-  }
-})
+var users = [{
+  id: 'abc123',
+  username: 'joeuser'
+}];
+
+function getUser(id) {
+  var user = users.filter(function(u) {
+    return u.id === id;
+  });
+
+  if (user[0])
+    return user[0];
+
+  return {};
+}
 
 server.route({
   method: 'get',
-  path: '/users/abc123',
-  handler: function(request, reply) {
-    reply({
-      id: 'abc123',
-      username: 'joeuser'
-    })
+  path: '/users/{id*}',
+  handler: function (request, reply) {
+    if (!request.params.id)
+      return reply(users);
+    var user = getUser(request.params.id);
+    reply(user);
   }
 })
 
 server.route({
   method: 'post',
   path: '/users',
-  handler: function(request, reply) {
+  handler: function (request, reply) {
+    users.push(request.payload);
+    reply(request.payload)
+  }
+})
+
+server.route({
+  method: 'put',
+  path: '/users/{id}',
+  handler: function (request, reply) {
+    var user = getUser(request.params.id);
+    if (!user || !user.id)
+      return reply(Boom.notFound('User ' = request.params.id + ' not found'));
+    for (var p in request.payload) {
+      user[p] = request.payload[p];
+    }
+    reply(user);
+  }
+})
+
+server.route({
+  method: 'delete',
+  path: '/users/{id}',
+  handler: function (request, reply) {
+    var user = getUser(request.params.id);
+    if (!user || !user.id)
+      return reply(Boom.notFound('User ' = request.params.id + ' not found'));
     reply({
-      payload: request.payload
+      deleted: 1
     })
   }
 })
@@ -42,7 +73,7 @@ server.route({
 server.route({
   method: 'get',
   path: '/users/404',
-  handler: function(request, reply) {
+  handler: function (request, reply) {
     reply(Boom.notFound());
   }
 })
