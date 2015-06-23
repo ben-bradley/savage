@@ -3,7 +3,13 @@ module.exports.clientOptions = {
 };
 
 module.exports.endpointOptions = {
-  path: '/users'
+  path: '/users',
+  middleware: [
+    function(options, resolve, reject) {
+      options.qs.foo = 'bar';
+      resolve(options);
+    }
+  ]
 };
 
 module.exports.user = {

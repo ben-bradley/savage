@@ -19,4 +19,5 @@ module.exports.user = function(user) {
 
 module.exports.middleware = function(response) {
   (response.request.headers.foo).should.eql('bar');
+  (response.request.uri.query).should.eql('foo=bar');
 }

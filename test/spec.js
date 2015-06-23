@@ -19,6 +19,12 @@ function mw(options, resolve, reject) {
   resolve(options);
 }
 
+function mw2(options, resolve, reject) {
+  options.headers.baz = 'qux';
+  options._mw = (options._mw) ? options._mw + 1 : 1;
+  resolve(options);
+}
+
 debug('starting tests...');
 
 describe('Client', function () {
@@ -58,24 +64,34 @@ describe('Client', function () {
       client.use(mw);
       var user = new client.Endpoint(endpointOptions);
       (user).should.be.an.instanceOf(client.Endpoint);
-      user.use(mw);
+      user.use(mw2);
       (user).should.be.an.Object.with.properties([
         'url',
         'middleware'
       ]);
       (user.url).should.equal(clientOptions.url + endpointOptions.path);
-      (user.middleware).should.be.an.Array.with.length(2);
+      (user.middleware).should.be.an.Array.with.length(1);
+      (user._clientMiddleware).should.be.an.Array.with.length(1);
     })
 
     it('should allow for chaining middleware', function () {
       client
         .use(mw)
         .use(mw);
-      var user = new client.Endpoint(endpointOptions);
+      var user = new client.Endpoint({
+        path: '/users',
+        middleware: [
+          function(options, resolve, reject) {
+            resolve(options);
+          }
+        ]
+      });
       user
         .use(mw)
         .use(mw);
-      (user.middleware).should.be.an.Array.with.length(4);
+      (user.middleware).should.be.an.Array.with.length(2);
+      (user._clientMiddleware).should.be.an.Array.with.length(2);
+      (user._endpointMiddleware).should.be.an.Array.with.length(1);
     })
 
   })
