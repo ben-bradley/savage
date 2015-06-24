@@ -1,7 +1,7 @@
 {
   "name": "savage",
-  "version": "0.0.1",
-  "description": "A basic template for deving an ES6 app",
+  "version": "0.1.0",
+  "description": "Kinda like Mongoose, but for REST with Promises!",
   "main": "index.js",
   "dependencies": {
     "debug": "^2.2.0",
