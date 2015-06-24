@@ -1,4 +1,4 @@
-# Savage
+# Savage [![Build Status](https://secure.travis-ci.org/ben-bradley/savage.png)](http://travis-ci.org/ben-bradley/savage)
 
 > Ooooohhh yeeah!
 
@@ -34,8 +34,6 @@ The `Client()` is just a way to create a re-usable model for a server.  Once you
 
 Using our example server, you would create a Client like this:
 
-#### ES2015
-
 ```javascript
 let Client = require('savage');
 
@@ -51,8 +49,6 @@ You can also add middleware to a `client` object and all subsequent `Endpoint()`
 ### Endpoint
 
 You can safely think of endpoints as the path parameters in a URL.
-
-#### ES2015
 
 ```javascript
 let Client = require('savage');
