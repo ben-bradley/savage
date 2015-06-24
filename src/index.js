@@ -215,6 +215,11 @@ class Endpoint {
 
 }
 
+/**
+ * Internal fn to issue the HTTP request
+ * @param   {Object}  options The Request options object
+ * @returns {Promise} Returns a promise for easy handling
+ */
 function _request(options) {
   return Promise((resolve, reject) => {
     debug('Requesting: ', options);
