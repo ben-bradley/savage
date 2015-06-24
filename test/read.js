@@ -24,7 +24,6 @@ module.exports = function () {
     });
 
     it('should return basic response to /users', function (done) {
-      console.log(user);
       user
         .use(util.mw)
         .use(util.delayedMw)
@@ -35,7 +34,6 @@ module.exports = function () {
           (response.json).should.be.an.Array;
           asserts.user(response.json[0]);
           asserts.middleware(response);
-          console.log(user);
           done();
         })
         .catch(done);
