@@ -1,5 +1,5 @@
 var should = require('should'),
-  debug = require('debug')('test/spec');
+  debug = require('debug')('savage:test/spec');
 
 var Client = require('../'),
   server = require('./server'),
@@ -27,29 +27,33 @@ function mw2(options, resolve, reject) {
 
 debug('starting tests...');
 
-describe('Client', function () {
+describe('Savage', function () {
 
-  it('should be a function', function () {
-    (Client).should.be.a.Function;
-  })
+  describe('Client()', function() {
 
-  it('should return an instance of a client', function () {
-    var client = new Client(clientOptions);
-    (client).should.be.an.instanceOf(Client);
-    (client).should.be.an.Object.with.properties([
-      'url',
-      'middleware',
-      'Endpoint',
-      'use'
-    ]);
-    (client.Endpoint).should.be.a.Function;
-    (client.use).should.be.a.Function;
-  })
+    it('should be a function', function () {
+      (Client).should.be.a.Function;
+    })
 
-  it('should add callbacks to the middleware', function () {
-    var client = new Client(clientOptions);
-    client.use(mw);
-    (client.middleware.length).should.equal(1);
+    it('should return an instance of a client', function () {
+      var client = new Client(clientOptions);
+      (client).should.be.an.instanceOf(Client);
+      (client).should.be.an.Object.with.properties([
+        'url',
+        'middleware',
+        'Endpoint',
+        'use'
+      ]);
+      (client.Endpoint).should.be.a.Function;
+      (client.use).should.be.a.Function;
+    })
+
+    it('should add callbacks to the middleware', function () {
+      var client = new Client(clientOptions);
+      client.use(mw);
+      (client.middleware.length).should.equal(1);
+    })
+
   })
 
   describe('Endpoint', function () {
@@ -95,6 +99,8 @@ describe('Client', function () {
     })
 
   })
+
+  require('./middleware')();
 
   require('./create')();
 

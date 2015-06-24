@@ -1,4 +1,5 @@
 var Hapi = require('hapi'),
+  debug = require('debug')('savage:test/server'),
   Boom = require('boom');
 
 var server = new Hapi.Server();
@@ -27,6 +28,7 @@ server.route({
   method: 'get',
   path: '/users/{id*}',
   handler: function (request, reply) {
+    debug('GET', request.params);
     if (!request.params.id)
       return reply(users);
     var user = getUser(request.params.id);
@@ -38,6 +40,7 @@ server.route({
   method: 'post',
   path: '/users',
   handler: function (request, reply) {
+    debug('POST', request.paylaod);
     users.push(request.payload);
     reply(request.payload)
   }
@@ -47,6 +50,7 @@ server.route({
   method: 'put',
   path: '/users/{id}',
   handler: function (request, reply) {
+    debug('PUT', request.params, request.payload);
     var user = getUser(request.params.id);
     if (!user || !user.id)
       return reply(Boom.notFound('User ' = request.params.id + ' not found'));
@@ -61,6 +65,7 @@ server.route({
   method: 'delete',
   path: '/users/{id}',
   handler: function (request, reply) {
+    debug('DELETE', request.params);
     var user = getUser(request.params.id);
     if (!user || !user.id)
       return reply(Boom.notFound('User ' = request.params.id + ' not found'));

@@ -1,5 +1,5 @@
 var should = require('should'),
-  debug = require('debug')('test/spec');
+  debug = require('debug')('savage:test/read');
 
 var Client = require('../'),
   server = require('./server'),
