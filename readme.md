@@ -39,9 +39,19 @@ Using our example server, you would create a Client like this:
 ```javascript
 let Client = require('savage');
 
+let client = new Client('http://localhost:3000');
+
+/*
 let client = new Client({
-  url: 'http://localhost:3000'
+  url: 'http://localhost:3000',
+  middleware: [
+    (options, resolve, reject) => {
+      // do something for all client.Endpoint()s
+      resolve(options);
+    }
+  ]
 });
+*/
 ```
 
 With a `client` created, you can now add Endpoint models with which you will interact.
@@ -55,13 +65,21 @@ You can safely think of endpoints as the path parameters in a URL.
 ```javascript
 let Client = require('savage');
 
-let client = new Client({
-  url: 'http://localhost:3000'
-});
+let client = new Client('http://localhost:3000');
 
+let users = new client.Endpoint('/users');
+
+/*
 let users = new client.Endpoint({
-  path: '/users'
+  path: '/users',
+  middleware: [
+    (options, resolve, reject) => {
+      // do something for all CRUD calls for this client.Endpoint()
+      resolve(options);
+    }
+  ]
 });
+*/
 ```
 
 Calling `create()`, `read()`, `update()`, or `delete()` on your endpoint will issue the corresponding HTTP request and will return a Promise that produces a simplified Request response object that lazily attempts to convert the body to JSON.
@@ -167,6 +185,7 @@ users
 
 ## Versions
 
+- 0.2.0 = Client() and Endpoint() accept strings and objects
 - 0.1.0 = $ npm publish
 - 0.0.* = Internal development & testing
 

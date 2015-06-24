@@ -20,6 +20,10 @@ var Connection = (function () {
   function Connection(options) {
     _classCallCheck(this, Connection);
 
+    if (typeof options === 'string') options = {
+      url: options
+    };
+
     var url = options.url;
     var _options$middleware = options.middleware;
     var middleware = _options$middleware === undefined ? [] : _options$middleware;
@@ -65,6 +69,10 @@ var Connection = (function () {
 var Endpoint = (function () {
   function Endpoint(cn, options) {
     _classCallCheck(this, Endpoint);
+
+    if (typeof options === 'string') options = {
+      path: options
+    };
 
     var path = options.path;
     var _options$middleware2 = options.middleware;

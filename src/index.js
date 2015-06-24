@@ -11,6 +11,11 @@ let Promise = Promise || q.Promise;
  */
 class Connection {
   constructor(options) {
+    if (typeof options === 'string')
+      options = {
+        url: options
+      };
+
     let {
       url,
       middleware = []
@@ -51,6 +56,11 @@ class Connection {
  */
 class Endpoint {
   constructor(cn, options) {
+    if (typeof options === 'string')
+      options = {
+        path: options
+      };
+
     let {
       path,
       middleware = []
