@@ -53,7 +53,7 @@ server.route({
     debug('PUT', request.params, request.payload);
     var user = getUser(request.params.id);
     if (!user || !user.id)
-      return reply(Boom.notFound('User ' = request.params.id + ' not found'));
+      return reply(Boom.notFound('User ' + request.params.id + ' not found'));
     for (var p in request.payload) {
       user[p] = request.payload[p];
     }
@@ -68,7 +68,7 @@ server.route({
     debug('DELETE', request.params);
     var user = getUser(request.params.id);
     if (!user || !user.id)
-      return reply(Boom.notFound('User ' = request.params.id + ' not found'));
+      return reply(Boom.notFound('User ' + request.params.id + ' not found'));
     reply({
       deleted: 1
     })
