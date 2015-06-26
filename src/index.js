@@ -207,17 +207,18 @@ class Endpoint {
 
     function iterate(mw, options) {
       return Promise((resolve, reject) => {
-        if (mw)
-          return mw(options, resolve, reject);
-        resolve(options);
-      }).then((options) => {
-        if (!options)
-          throw new Error('Middleware didn\'t return the options object');
-        let next = middleware.shift();
-        if (next)
-          return iterate(next, options);
-        return _request(options);
-      });
+          if (mw)
+            return mw(options, resolve, reject);
+          resolve(options);
+        })
+        .then((options) => {
+          if (!options)
+            throw new Error('Middleware didn\'t return the options object');
+          let next = middleware.shift();
+          if (next)
+            return iterate(next, options);
+          return _request(options);
+        });
     }
 
     return iterate(null, options);
