@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.clientOptions = {
   url: 'http://localhost:3001'
 };
@@ -5,7 +7,7 @@ module.exports.clientOptions = {
 module.exports.endpointOptions = {
   path: '/users',
   middleware: [
-    function(options, resolve, reject) {
+    function (options, resolve, reject) {
       options.qs.foo = 'bar';
       resolve(options);
     }
@@ -15,7 +17,7 @@ module.exports.endpointOptions = {
 module.exports.user = {
   id: 'fake',
   username: 'newguy'
-}
+};
 
 function mw(options, resolve, reject) {
   options.headers.foo = 'bar';
@@ -35,6 +37,6 @@ module.exports.delayedMw = delayedMw;
 function failedMw(options, resolve, reject) {
   process.nexttick(function () {
     reject(new Error('Middleware failure!'));
-  })
+  });
 }
 module.exports.failedMw = failedMw;

@@ -123,8 +123,7 @@ class Endpoint {
   read(path) {
     if (!path)
       path = '';
-
-    if (!/^\//.test(path))
+    else if (!/^\//.test(path))
       path = '/' + path;
 
     let options = {
