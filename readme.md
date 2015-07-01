@@ -185,7 +185,7 @@ users
 
 ## Versions
 
+- 0.2.1 = Fix for when read() calls made w/o path args to prevent trailing slash
 - 0.2.0 = Client() and Endpoint() accept strings and objects
 - 0.1.0 = $ npm publish
 - 0.0.* = Internal development & testing
-
