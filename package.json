@@ -1,6 +1,6 @@
 {
   "name": "savage",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Kinda like Mongoose, but for REST with Promises!",
   "main": "index.js",
   "dependencies": {

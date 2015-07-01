@@ -137,9 +137,7 @@ var Endpoint = (function () {
      * @returns {Promise} Returns a promise to read an object/array from the server
      */
     value: function read(path) {
-      if (!path) path = '';
-
-      if (!/^\//.test(path)) path = '/' + path;
+      if (!path) path = '';else if (!/^\//.test(path)) path = '/' + path;
 
       var options = {
         url: this.url + path,
